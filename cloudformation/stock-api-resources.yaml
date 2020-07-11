@@ -1,0 +1,25 @@
+---
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  StockApiGatewayLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: stock-api-lambda
+      Description: 'Lambda will return stock information'
+      Handler: index.handler
+      Runtime: nodejs12.x
+      CodeUri: 's3://vixay-lambdas/stock-api.zip'
+      MemorySize: 128
+      Timeout: 5
+      Role: arn:aws:iam::505402633935:role/service-role/Stock_Lambda-role-6gc6ju9o
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: '/'
+            Method: get
+        StockApiEvent:
+          Type: Api
+          Properties:
+            Path: '/{stock}'
+            Method: get
